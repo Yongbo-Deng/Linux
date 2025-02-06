@@ -1,0 +1,1 @@
+cmd_/mnt/drivers_projects/01_hello_drv/hello_drv.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /mnt/drivers_projects/01_hello_drv/hello_drv.ko /mnt/drivers_projects/01_hello_drv/hello_drv.o /mnt/drivers_projects/01_hello_drv/hello_drv.mod.o ;  true
