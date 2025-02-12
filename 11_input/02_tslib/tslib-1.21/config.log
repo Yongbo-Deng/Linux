@@ -42,6 +42,12 @@ PATH: /home/book/100ask_imx6ull-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-
 PATH: /home/book/100ask_imx6ull-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
 PATH: /home/book/100ask_imx6ull_mini-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
 PATH: /home/book/100ask_imx6ull_mini-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
+PATH: /home/book/100ask_imx6ull-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
+PATH: /home/book/100ask_imx6ull_mini-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
+PATH: /home/book/100ask_imx6ull-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
+PATH: /home/book/100ask_imx6ull-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
+PATH: /home/book/100ask_imx6ull-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
+PATH: /home/book/100ask_imx6ull-sdk/ToolChain/arm-buildroot-linux-gnueabihf_sdk-buildroot/bin
 
 
 ## ----------- ##
@@ -359,7 +365,7 @@ configure:11854: checking how to hardcode library paths into programs
 configure:11879: result: immediate
 configure:11981: checking for shl_load
 configure:11981: arm-linux-gnueabihf-gcc -o conftest -DGCC_HASCLASSVISIBILITY -O2 -Wall -W -fPIC   conftest.c  >&5
-/tmp/ccWDPfW2.o: In function `main':
+/tmp/ccAenrNN.o: In function `main':
 conftest.c:(.text.startup+0x2): undefined reference to `shl_load'
 collect2: error: ld returned 1 exit status
 configure:11981: $? = 1
@@ -471,7 +477,7 @@ configure: failed program was:
 configure:12019: result: no
 configure:12024: checking for dlopen
 configure:12024: arm-linux-gnueabihf-gcc -o conftest -DGCC_HASCLASSVISIBILITY -O2 -Wall -W -fPIC   conftest.c  >&5
-/tmp/ccScZPr8.o: In function `main':
+/tmp/ccEmwSHT.o: In function `main':
 conftest.c:(.text.startup+0x2): undefined reference to `dlopen'
 collect2: error: ld returned 1 exit status
 configure:12024: $? = 1
@@ -978,7 +984,7 @@ configure:13584: $? = 0
 configure:13584: result: yes
 configure:13590: checking for _doprnt
 configure:13590: arm-linux-gnueabihf-gcc -o conftest -DGCC_HASCLASSVISIBILITY -O2 -Wall -W -fPIC   conftest.c -ldl  >&5
-/tmp/ccaL9EQ9.o: In function `main':
+/tmp/ccndfQ2S.o: In function `main':
 conftest.c:(.text.startup+0x2): undefined reference to `_doprnt'
 collect2: error: ld returned 1 exit status
 configure:13590: $? = 1
