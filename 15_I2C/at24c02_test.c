@@ -63,17 +63,23 @@ int main(int argc, char **argv)
 			// mem_addr, *str
 			// mem_addr++, str++
 			ret = i2c_smbus_write_byte_data(file, mem_addr, *str);
-            // wait tWR(10ms)
-            nanosleep(&req, NULL);
 			if (ret)
 			{
 				printf("i2c_smbus_write_byte_data err\n");
 				return -1;
 			}
+            // wait tWR(10ms)
+            nanosleep(&req, NULL);
+
 			mem_addr++;
 			str++;
 		}
-        i2c_smbus_write_byte_data(file, mem_addr, 0);   // String end char.
+        ret = i2c_smbus_write_byte_data(file, mem_addr, 0);   // String end char.
+        if (ret)
+		{
+            printf("i2c_smbus_write_byte_data err\n");
+            return -1;
+        }
 	}
 	else
 	{
