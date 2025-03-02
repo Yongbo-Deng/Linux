@@ -11,7 +11,7 @@
 /*
 socket
 bind
-sendto/recvfrom
+recvfrom
 */
 
 #define ServerPort  8888

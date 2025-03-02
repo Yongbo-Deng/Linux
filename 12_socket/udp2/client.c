@@ -42,16 +42,20 @@ int main(int argc, char **argv)
 
     memset(tSocketServerAddr.sin_zero, 0, 8);
 
+#if 0
     iRet = connect(iSocketClient, (const struct sockaddr *)&tSocketServerAddr, sizeof(struct sockaddr));
     if (iRet == -1)
     {
         perror("Connect error.");
         return -1;
     }
+#endif
+
     while (1) {
         if (fgets(ucSendBuf, 999, stdin))
         {
-            iSendLen = send(iSocketClient, ucSendBuf, strlen(ucSendBuf), 0);
+            iSendLen = sendto(iSocketClient, ucSendBuf, strlen(ucSendBuf), 0,
+                                 (const struct sockaddr *)&tSocketServerAddr, sizeof(struct sockaddr));
             if (iSendLen <= 0)
             {
                 close(iSocketClient);
