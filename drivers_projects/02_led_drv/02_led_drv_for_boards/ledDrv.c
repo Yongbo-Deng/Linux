@@ -17,7 +17,6 @@
 
 #include "led_opr.h"
 
-#define LED_NUM 2
 
 /* Decide major device number. */
 static int major = 0;
@@ -58,7 +57,6 @@ static int led_drv_close(struct inode *node, struct file *file) {
 	printk("%s %s line %d\n", __FILE__, __FUNCTION__, __LINE__);
 	return 0;
 }
-
 
 
 /* Define your owm file_operations structure. */

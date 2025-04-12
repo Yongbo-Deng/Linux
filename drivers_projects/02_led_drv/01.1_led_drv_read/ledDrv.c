@@ -23,13 +23,31 @@
 static int major = 0;
 static struct class *led_class;
 static struct led_operations *p_led_opr;
+static char led_state[LED_NUM] = {1, 0};	/* LED status array */
 
 #define MIN(a, b) (a < b ? a : b)
 
 /* Implement open/read_write etc. functions, and completet the file_operations structure. */
 static ssize_t led_drv_read(struct file *file, char __user *buf, size_t size, loff_t * offset) {
+	/* Read the LED status according to devicde number. */
+	char state;
+	int err;
+	int minor = iminor(file_inode(file));
+
+	// Allow only a single byte to be read
+	if (*offset != 0) {
+		return 0;
+	}
+
+	state = led_state[minor];
+	err = copy_to_user(buf, &state, 1);
+	if (err) {
+		printk("copy_to_user error\n");
+		return -EFAULT;
+	}
+	*offset = 1;	
 	printk ("%s %s line %d\n", __FILE__, __FUNCTION__, __LINE__);
-	return 0;
+	return 1;
 }
 static ssize_t led_drv_write(struct file *file, const char __user *buf, size_t size, loff_t * offset) {
 	int err;
@@ -42,6 +60,7 @@ static ssize_t led_drv_write(struct file *file, const char __user *buf, size_t s
 
 	/* Control the LED according to devicde number and status. */
 	p_led_opr->ctl(minor, status);
+	led_state[minor] = status;	/* Update the LED status array */
 
 	return 1;
 }
@@ -52,14 +71,15 @@ static int led_drv_open(struct inode *node, struct file *file) {
 	/* Initialize the kernel buffer. */
 	p_led_opr->init(minor);
 
+	/* Initialize the LED status array */
+	// led_state[minor] = 0;	/* Set the initial status to off */
+
 	return 0;
 }
 static int led_drv_close(struct inode *node, struct file *file) {
 	printk("%s %s line %d\n", __FILE__, __FUNCTION__, __LINE__);
 	return 0;
 }
-
-
 
 /* Define your owm file_operations structure. */
 static struct file_operations led_drv = {
@@ -79,12 +99,12 @@ static int __init led_init(void) {
 	int i;
 
 	printk ("%s %s line %d\n", __FILE__, __FUNCTION__, __LINE__);
-	major = register_chrdev(0, "led", &led_drv);		/* /dev/led */
+	major = register_chrdev(0, "myled", &led_drv);		/* /dev/led */
 
 	led_class = class_create(THIS_MODULE, "led_class");
 	err = PTR_ERR(led_class);
 	if (IS_ERR(led_class)) {
-		unregister_chrdev(major, "led");
+		unregister_chrdev(major, "myled");
 		return -1;
 	}
 
@@ -102,12 +122,11 @@ static void __exit led_exit(void) {
 	printk ("%s %s line %d\n", __FILE__, __FUNCTION__, __LINE__);
 	device_destroy(led_class, MKDEV(major, 0));
 	class_destroy(led_class);
-	unregister_chrdev(major, "led");
+	unregister_chrdev(major, "myled");
 }
 
 /* Additional: Device Info, Auto generate device node. */
 module_init(led_init);
-
 module_exit(led_exit);
 
 MODULE_LICENSE("GPL");
