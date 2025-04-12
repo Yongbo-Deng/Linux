@@ -17,6 +17,7 @@
 
 #include "led_opr.h"
 
+#define LED_NUM 2
 
 /* Decide major device number. */
 static int major = 0;
@@ -58,7 +59,6 @@ static int led_drv_close(struct inode *node, struct file *file) {
 	return 0;
 }
 
-
 /* Define your owm file_operations structure. */
 static struct file_operations led_drv = {
 	.owner  	= THIS_MODULE,
@@ -67,9 +67,6 @@ static struct file_operations led_drv = {
 	.write  	= led_drv_write,
 	.release 	= led_drv_close,
 };
-
-
-/* Send the structure to the kernel. */
 
 /* An entry function for dirver registration. */
 static int __init led_init(void) {
@@ -86,18 +83,23 @@ static int __init led_init(void) {
 		return -1;
 	}
 
-	for (i = 0; i < LED_NUM; i++) {
+	p_led_opr = get_board_led_opr();
+
+	for (i = 0; i < p_led_opr->num; i++) {
 		device_create(led_class, NULL, MKDEV(major, i), NULL, "myled%d", i);	/* /dev/myledi */	
 	}
 
-	p_led_opr = get_board_led_opr();
 	return 0;
 }
 
 /* An exit function for unistalling driver. */
 static void __exit led_exit(void) {
-
+	int i;
 	printk ("%s %s line %d\n", __FILE__, __FUNCTION__, __LINE__);
+
+	for (i = 0; i < p_led_opr->num; i++) {
+		device_destroy(led_class, MKDEV(major, i));
+	}
 	device_destroy(led_class, MKDEV(major, 0));
 	class_destroy(led_class);
 	unregister_chrdev(major, "led");
@@ -105,7 +107,6 @@ static void __exit led_exit(void) {
 
 /* Additional: Device Info, Auto generate device node. */
 module_init(led_init);
-
 module_exit(led_exit);
 
 MODULE_LICENSE("GPL");

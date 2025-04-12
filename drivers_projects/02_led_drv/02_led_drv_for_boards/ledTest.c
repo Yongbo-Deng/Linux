@@ -7,8 +7,8 @@
 #include <string.h>
 
 /*
- * ./ledtest /dev/100ask_led0 on
- * ./ledtest /dev/101ask_led0 off
+ * ./ledtest /dev/myled0 on
+ * ./ledtest /dev/myled0 off
  */
 int main(int argc, char **argv)
 {
@@ -32,14 +32,12 @@ int main(int argc, char **argv)
 	{
 		status = 1;
 		write(fd, &status, 1);
-	}
-	else
+	} else
 	{
 		status = 0;
 		write(fd, &status, 1);
 	}
 	
 	close(fd);
-	
 	return 0;
 }

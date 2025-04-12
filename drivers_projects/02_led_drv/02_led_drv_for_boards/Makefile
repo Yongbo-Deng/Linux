@@ -10,5 +10,5 @@ clean:
 	rm -f ledTest
 
 
-myled-y := ledDrv.o board_demo.o
+myled-y := ledDrv.o board_fire_demo.o
 obj-m	+= myled.o
