@@ -34,7 +34,7 @@ static int board_xxx_button_read_gpio (int which)
     return 1;
 }
 
-static struct button_operations my_buttons_ops ={
+static struct GPIO_operations my_buttons_ops ={
     .count = 2,
     .init  = board_xxx_button_init_gpio,
     .read  = board_xxx_button_read_gpio,

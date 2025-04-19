@@ -25,7 +25,7 @@
 
 static int major = 0;
 
-static struct button_operations *p_button_opr;
+static struct GPIO_operations *p_button_opr;
 static struct class *button_class;
 
 static int button_open (struct inode *inode, struct file *file)
@@ -52,7 +52,7 @@ static struct file_operations button_fops = {
     .read = button_read,
 };
 
-void register_button_operations(struct button_operations *opr)
+void register_button_operations(struct GPIO_operations *opr)
 {
     int i;
 
